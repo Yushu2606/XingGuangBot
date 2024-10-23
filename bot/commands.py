@@ -168,7 +168,8 @@ async def mai(api: BotAPI, message: GroupMessage, command: str, params: list[str
         return True
 
     if uid in maimai.api.queues and type(maimai.api.queues[uid]) is list:
-        return False, "队列中已有一个任务"
+        await message.reply(content="队列中已有一个任务")
+        return True
 
     try:
         succeed, msg = await maimai.api.C(uid, mai_ver[ver_name], act_type)
