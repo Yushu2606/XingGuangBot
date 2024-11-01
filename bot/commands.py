@@ -7,6 +7,7 @@ from botpy import BotAPI
 from botpy.message import GroupMessage
 from croniter.croniter import croniter
 from httpcore import ConnectTimeout
+from httpx import ConnectError
 
 import maimai.api
 from utils.command_util import Commands
@@ -42,6 +43,9 @@ async def bind(api: BotAPI, message: GroupMessage, command: str, params: list[st
         return True
     except ValueError:
         await message.reply(content="远端访问异常")
+        return True
+    except ConnectError:
+        await message.reply(content="代理异常")
         return True
 
     if result["errorID"] != 0 or result["userID"] == -1:
@@ -114,6 +118,9 @@ async def sync(api: BotAPI, message: GroupMessage, command: str, params: None = 
     except ValueError:
         await message.reply(content="远端访问异常")
         return True
+    except ConnectError:
+        await message.reply(content="代理异常")
+        return True
 
     tasks = []
     if dfid:
@@ -178,6 +185,9 @@ async def mai(api: BotAPI, message: GroupMessage, command: str, params: list[str
         return True
     except ValueError:
         await message.reply(content="远端访问异常")
+        return True
+    except ConnectError:
+        await message.reply(content="代理异常")
         return True
 
     if not succeed:
@@ -267,6 +277,9 @@ async def unlock(api: BotAPI, message: GroupMessage, command: str, params: list[
         return True
     except ValueError:
         await message.reply(content="远端访问异常")
+        return True
+    except ConnectError:
+        await message.reply(content="代理异常")
         return True
 
     if not succeed:
